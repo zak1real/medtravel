@@ -71,12 +71,44 @@ strong, b { font-weight: 500; color: #EEF2F7; }
 .wp-block-buttons { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; }
 .wp-block-buttons.is-content-justification-center { justify-content: center; }
 
+/* ---------- Верхняя строка: телефоны, почта, мессенджеры ---------- */
+.mt-topbar { background: #181D28; border-bottom: 1px solid rgba(255,255,255,.06); font-size: 14px; color: var(--muted); }
+.mt-topbar__inner { display: flex; align-items: center; justify-content: space-between; gap: 6px 24px; flex-wrap: wrap; min-height: 42px; padding-top: 5px; padding-bottom: 5px; }
+.mt-topbar a { color: var(--text); text-decoration: none; white-space: nowrap; }
+.mt-topbar a:hover { color: #fff; }
+.mt-topbar__phones, .mt-topbar__right { display: flex; align-items: center; gap: 6px 22px; flex-wrap: wrap; }
+.mt-topbar__phones a { font-weight: 500; }
+.mt-topbar__cc { display: inline-block; margin-right: 7px; padding: 3px 4px; border: 1px solid rgba(116,182,248,.45); border-radius: 3px; font: 500 10.5px/1 var(--sans); letter-spacing: .06em; color: var(--head); vertical-align: 1px; }
+@media (max-width: 640px) {
+	.mt-topbar { font-size: 13px; }
+	.mt-topbar__inner { gap: 4px 12px; padding-top: 6px; padding-bottom: 6px; }
+	.mt-topbar__phones { gap: 4px 14px; }
+	.mt-topbar__right { gap: 12px; width: 100%; justify-content: space-between; }
+}
+
+/* Мессенджеры (WhatsApp, Telegram, MAX) — круглые кнопки фирменных цветов */
+.mt-messengers { display: inline-flex; align-items: center; gap: 8px; }
+.mt-msg { width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; color: #fff !important; flex-shrink: 0; transition: filter .15s ease, transform .15s ease; }
+.mt-msg svg { width: 15px; height: 15px; }
+.mt-msg:hover { filter: brightness(1.12); }
+.mt-msg:active { transform: scale(.94); }
+.mt-msg--wa { background: #25D366; }
+.mt-msg--tg { background: #2AABEE; }
+.mt-msg--tg svg { margin-left: -2px; }
+.mt-msg--max { background: linear-gradient(135deg, #3E8BFF, #8A4DFF); }
+.mt-messengers--lg { gap: 10px; }
+.mt-messengers--lg .mt-msg { width: 40px; height: 40px; }
+.mt-messengers--lg .mt-msg svg { width: 20px; height: 20px; }
+.mt-toast { position: fixed; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom)); z-index: 90; transform: translate(-50%, 12px); max-width: calc(100vw - 32px); padding: 12px 18px; border-radius: var(--radius); background: #0F1622; color: #EEF2F7; font-size: 15px; box-shadow: 0 12px 32px rgba(0,0,0,.45); opacity: 0; transition: opacity .2s ease, transform .2s ease; pointer-events: none; }
+.mt-toast.is-on { opacity: 1; transform: translate(-50%, 0); }
+
 /* ---------- Шапка ---------- */
 .mt-header { position: sticky; top: 0; z-index: 50; background: rgba(31,37,50,.92); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,.06); }
 .mt-header__inner { display: flex; align-items: center; gap: 24px; min-height: var(--header-h); }
-.mt-logo { display: inline-flex; align-items: center; gap: 10px; color: var(--head); text-decoration: none; flex-shrink: 0; }
+.mt-logo { display: inline-flex; align-items: center; gap: 12px; color: var(--head); text-decoration: none; flex-shrink: 0; }
 .mt-logo:hover { color: var(--head); }
-.mt-logo__mark { width: 32px; height: 32px; }
+/* Логотип клиентки — кельтское дерево в кремовом круге (brand/, tools/logo-extract.ps1) */
+.mt-logo__mark { width: 44px; height: 44px; border-radius: 50%; }
 .mt-logo__text { font: 300 22px/1 var(--slab); color: #E8EDF4; white-space: nowrap; }
 .mt-logo__text b { font-weight: 400; color: var(--head); }
 .mt-nav { display: flex; align-items: center; gap: 24px; margin-left: auto; }
@@ -88,30 +120,59 @@ strong, b { font-weight: 500; color: #EEF2F7; }
 .mt-menu .sub-menu { position: absolute; top: 100%; left: 0; min-width: 260px; list-style: none; margin: 0; padding: 8px; background: var(--bg-2); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: 0 16px 40px rgba(0,0,0,.35); opacity: 0; visibility: hidden; transform: translateY(6px); transition: opacity .15s ease, transform .15s ease, visibility .15s; }
 .mt-menu li:hover > .sub-menu, .mt-menu li:focus-within > .sub-menu { opacity: 1; visibility: visible; transform: none; }
 .mt-nav__contacts { display: flex; align-items: center; gap: 16px; }
-.mt-phone { color: #EEF2F7; text-decoration: none; font-weight: 500; white-space: nowrap; font-size: 15px; }
+.mt-nav__head, .mt-nav__extra, .mt-sub-toggle, .mt-backdrop { display: none; }
 .mt-burger { display: none; margin-left: auto; width: 44px; height: 44px; padding: 10px; background: none; border: 0; cursor: pointer; }
-.mt-burger span { display: block; height: 2px; margin: 5px 0; background: var(--text); border-radius: 2px; transition: transform .2s ease, opacity .2s ease; }
-.mt-burger[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-.mt-burger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
-.mt-burger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+.mt-burger span { display: block; height: 2px; margin: 5px 0; background: var(--text); border-radius: 2px; }
 
 @media (max-width: 1180px) {
-	.mt-phone { display: none; }
+	.mt-menu a { padding: 8px 7px; font-size: 14.5px; }
+	.mt-header__inner { gap: 16px; }
 }
+/* Телефон и планшет: меню выезжает справа (полное, с подразделами), внизу панели — контакты */
 @media (max-width: 1024px) {
 	:root { --header-h: 64px; }
+	/* backdrop-filter делает шапку контейнером для position:fixed — панель меню оказалась бы внутри шапки */
+	.mt-header { backdrop-filter: none; -webkit-backdrop-filter: none; background: var(--bg); }
 	.mt-burger { display: block; }
-	.mt-nav { position: fixed; inset: var(--header-h) 0 0 0; flex-direction: column; align-items: stretch; gap: 24px; margin: 0; padding: 20px var(--gutter) 40px; background: var(--bg); overflow-y: auto; overscroll-behavior: contain; opacity: 0; visibility: hidden; transform: translateY(-8px); transition: opacity .2s ease, transform .2s ease, visibility .2s; }
-	.mt-nav.is-open { opacity: 1; visibility: visible; transform: none; }
-	.mt-menu { flex-direction: column; gap: 0; }
-	.mt-menu a { padding: 13px 0; font-size: 18px; border-bottom: 1px solid rgba(255,255,255,.07); border-radius: 0; }
-	.mt-menu .sub-menu { position: static; opacity: 1; visibility: visible; transform: none; box-shadow: none; border: 0; background: none; padding: 0 0 0 16px; min-width: 0; }
-	.mt-menu .sub-menu a { font-size: 16px; color: var(--muted); }
-	.mt-nav__contacts { flex-direction: column; align-items: stretch; }
-	.mt-phone { display: block; font-size: 18px; }
+	.mt-logo__mark { width: 40px; height: 40px; }
 	.mt-logo__text { font-size: 20px; }
+	.mt-nav { position: fixed; top: 0; right: 0; bottom: 0; z-index: 2; width: min(88vw, 400px); flex-direction: column; align-items: stretch; gap: 22px; margin: 0; padding: 0 22px calc(28px + env(safe-area-inset-bottom)); background: var(--bg-2); box-shadow: -24px 0 60px rgba(0,0,0,.45); overflow-y: auto; overscroll-behavior: contain; transform: translateX(100%); visibility: hidden; transition: transform .3s cubic-bezier(.32,.72,0,1), visibility .3s; }
+	.mt-nav.is-open { transform: none; visibility: visible; }
+	.mt-nav__head { display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 1; margin: 0 -22px; padding: 10px 12px 10px 22px; background: var(--bg-2); border-bottom: 1px solid var(--line); }
+	.mt-nav__head .mt-logo__text { font-size: 18px; color: var(--muted); }
+	.mt-nav__close { position: relative; width: 44px; height: 44px; background: none; border: 0; cursor: pointer; }
+	.mt-nav__close span { position: absolute; left: 11px; right: 11px; top: 21px; height: 2px; background: var(--text); border-radius: 2px; transform: rotate(45deg); }
+	.mt-nav__close span + span { transform: rotate(-45deg); }
+	.mt-backdrop { display: block; position: fixed; inset: 0; z-index: 1; background: rgba(8,11,18,.62); opacity: 0; transition: opacity .3s ease; }
+	.mt-backdrop.is-on { opacity: 1; }
+	.mt-menu { flex-direction: column; gap: 0; }
+	.mt-menu a { padding: 13px 0; font-size: 17px; border-bottom: 1px solid rgba(255,255,255,.07); border-radius: 0; }
+	.mt-menu .menu-item-has-children > a { padding-right: 52px; }
+	.mt-sub-toggle { display: flex; align-items: center; justify-content: center; position: absolute; top: 0; right: -10px; width: 52px; height: 51px; background: none; border: 0; color: var(--muted); cursor: pointer; }
+	.mt-sub-toggle svg { width: 18px; height: 18px; transition: transform .2s ease; }
+	.mt-sub-toggle[aria-expanded="true"] svg { transform: rotate(180deg); }
+	.mt-menu .sub-menu { position: static; display: none; opacity: 1; visibility: visible; transform: none; box-shadow: none; border: 0; background: none; padding: 0 0 6px 14px; min-width: 0; }
+	.mt-menu li.is-open > .sub-menu { display: block; }
+	.mt-menu .sub-menu a { padding: 10px 0; font-size: 15.5px; color: var(--muted); }
+	.mt-nav__contacts { flex-direction: column; align-items: stretch; gap: 22px; }
+	.mt-nav__contacts > .mt-btn { min-height: 48px; font-size: 16px; }
+	.mt-nav__extra { display: block; font-size: 15px; }
 	body.mt-menu-open { overflow: hidden; }
 }
+@media (max-width: 1024px) and (prefers-reduced-motion: reduce) { .mt-nav, .mt-backdrop { transition: none; } }
+
+/* ---------- Блок контактов [mt_contacts]: два офиса, почта, мессенджеры ---------- */
+.mt-cinfo { display: grid; gap: 20px; margin: 24px 0; }
+.mt-cinfo__office { display: grid; gap: 3px; padding-left: 14px; border-left: 2px solid var(--accent); }
+.mt-cinfo__city { font: 400 18px/1.3 var(--slab); color: #E8EDF4; }
+.mt-cinfo a { color: var(--text); text-decoration: none; overflow-wrap: anywhere; }
+.mt-cinfo a:hover { color: var(--accent-2); }
+.mt-cinfo__tel a { font-weight: 500; font-size: 18px; color: #EEF2F7; }
+.mt-cinfo__row { display: grid; gap: 6px; justify-items: start; }
+.mt-cinfo__label { font-size: 13px; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
+.mt-cinfo--compact { gap: 16px; margin: 0; font-size: 15px; }
+.mt-cinfo--compact .mt-cinfo__city { font-size: 15px; }
+.mt-cinfo--compact .mt-cinfo__tel a { font-size: 15px; }
 
 /* ---------- Секции главной ---------- */
 .mt-home > * { margin: 0; }
@@ -143,8 +204,23 @@ strong, b { font-weight: 500; color: #EEF2F7; }
 .mt-box h3 { margin-bottom: 8px; }
 .mt-box p:last-child { margin-bottom: 0; }
 .mt-grid > * { margin: 0 !important; }
-@media (max-width: 960px) { .mt-grid--3, .mt-grid--4 { grid-template-columns: repeat(2, 1fr); } }
+/* 5 колонок — направления на главной (9 направлений + «Второе мнение» = 2 ряда по 5) */
+.mt-grid--5 { grid-template-columns: repeat(5, 1fr); gap: 16px; }
+.mt-grid--5 .mt-dir h3 { margin: 16px 18px 6px; font-size: 20px; }
+.mt-grid--5 .mt-dir p { margin: 0 18px; font-size: 15px; }
+@media (max-width: 1180px) { .mt-grid--5 { grid-template-columns: repeat(3, 1fr); } .mt-grid--5 > .mt-dir--accent { grid-column: 1 / -1; } }
+@media (max-width: 960px) { .mt-grid--3, .mt-grid--4, .mt-grid--5 { grid-template-columns: repeat(2, 1fr); } .mt-grid--5 > .mt-dir--accent { grid-column: auto; } }
 @media (max-width: 640px) { .mt-grid--2, .mt-grid--3, .mt-grid--4 { grid-template-columns: 1fr; } }
+/* Телефон: направления — горизонтальные карточки (фото слева), чтобы 10 штук не растягивались на несколько экранов */
+@media (max-width: 640px) {
+	.mt-grid--5 { grid-template-columns: 1fr; gap: 10px; }
+	.mt-grid--5 .mt-dir:not(.mt-dir--accent) { display: grid; grid-template-columns: 108px 1fr; grid-template-rows: auto 1fr; padding: 0; }
+	.mt-grid--5 .mt-dir:not(.mt-dir--accent) .wp-block-image { grid-row: 1 / 3; aspect-ratio: auto; height: 100%; min-height: 92px; }
+	.mt-grid--5 .mt-dir:not(.mt-dir--accent) h3 { margin: 12px 14px 2px; font-size: 18px; }
+	.mt-grid--5 .mt-dir:not(.mt-dir--accent) p { margin: 0 14px 12px; font-size: 14px; line-height: 1.45; }
+	.mt-grid--5 .mt-dir--accent { padding: 20px 0; }
+	.mt-grid--5 .mt-dir--accent h3, .mt-grid--5 .mt-dir--accent p { margin-left: 18px; margin-right: 18px; }
+}
 
 /* Цифры */
 .mt-stat { text-align: center; padding: 8px 12px; }
@@ -328,6 +404,18 @@ strong, b { font-weight: 500; color: #EEF2F7; }
 .mt-card__title { font: 400 19px/1.3 var(--slab); color: #E8EDF4; }
 .mt-card__text { color: var(--muted); font-size: 15px; }
 .mt-card__more { margin-top: auto; padding-top: 6px; color: var(--accent-2); font-size: 15px; }
+
+/* Новости */
+.mt-card__date, .mt-pagehead__date { font-size: 13px; color: var(--muted); letter-spacing: .02em; }
+.mt-pagehead__date { display: block; margin-bottom: 8px; font-size: 14px; }
+.mt-cards--news { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
+.mt-article > * { max-width: 760px; }
+.mt-more-news { padding-bottom: clamp(48px, 6vw, 72px); }
+.mt-more-news h2 { margin-bottom: 24px; }
+.mt-pager .nav-links { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+.mt-pager .page-numbers { min-width: 44px; height: 44px; padding: 0 12px; display: inline-flex; align-items: center; justify-content: center; border: 1px solid var(--line); border-radius: var(--radius); color: var(--text); text-decoration: none; }
+.mt-pager .page-numbers.current { background: var(--accent); border-color: var(--accent); color: var(--ink); }
+.mt-pager .screen-reader-text { position: absolute; left: -9999px; }
 
 /* CTA внизу страниц */
 .mt-cta { background: linear-gradient(120deg, var(--note), #134C8A); padding: clamp(40px, 6vw, 64px) 0; }
