@@ -148,6 +148,9 @@ strong, b { font-weight: 500; color: #EEF2F7; }
 	.mt-nav__close span + span { transform: rotate(-45deg); }
 	.mt-backdrop { display: block; position: fixed; inset: 0; z-index: 1; background: rgba(8,11,18,.62); opacity: 0; transition: opacity .3s ease; }
 	.mt-backdrop.is-on { opacity: 1; }
+	/* Закрытое меню: затемнение не должно перехватывать нажатия (display:block выше перебивает атрибут hidden) */
+	.mt-backdrop[hidden] { display: none; }
+	.mt-backdrop:not(.is-on) { pointer-events: none; }
 	.mt-menu { flex-direction: column; gap: 0; }
 	.mt-menu a { padding: 13px 0; font-size: 17px; border-bottom: 1px solid rgba(255,255,255,.07); border-radius: 0; }
 	.mt-menu .menu-item-has-children > a { padding-right: 52px; }
