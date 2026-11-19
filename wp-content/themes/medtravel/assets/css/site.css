@@ -107,10 +107,13 @@ strong, b { font-weight: 500; color: #EEF2F7; }
 .mt-header__inner { display: flex; align-items: center; gap: 24px; min-height: var(--header-h); }
 .mt-logo { display: inline-flex; align-items: center; gap: 12px; color: var(--head); text-decoration: none; flex-shrink: 0; }
 .mt-logo:hover { color: var(--head); }
-/* Логотип клиентки — кельтское дерево в кремовом круге (brand/, tools/logo-extract.ps1) */
-.mt-logo__mark { width: 44px; height: 44px; border-radius: 50%; }
+/* Логотип клиентки — кельтское дерево, перекрашенное в голубой сайта (brand/logo-tree-blue.png, tools/logo-extract.ps1) */
+.mt-logo__mark { width: auto; height: 46px; }
 .mt-logo__text { font: 300 22px/1 var(--slab); color: #E8EDF4; white-space: nowrap; }
 .mt-logo__text b { font-weight: 400; color: var(--head); }
+/* «Med Travel» крупно, под ним BERLIN с разрядкой — название «Med Travel Berlin» без расширения шапки */
+.mt-logo__city { display: block; margin-top: 4px; font: 500 10.5px/1 var(--sans); letter-spacing: .42em; text-transform: uppercase; color: var(--muted); }
+.mt-nav__head .mt-logo__text { line-height: 1; }
 .mt-nav { display: flex; align-items: center; gap: 24px; margin-left: auto; }
 .mt-menu { display: flex; gap: 4px; list-style: none; margin: 0; padding: 0; }
 .mt-menu li { margin: 0; position: relative; }
@@ -134,7 +137,7 @@ strong, b { font-weight: 500; color: #EEF2F7; }
 	/* backdrop-filter делает шапку контейнером для position:fixed — панель меню оказалась бы внутри шапки */
 	.mt-header { backdrop-filter: none; -webkit-backdrop-filter: none; background: var(--bg); }
 	.mt-burger { display: block; }
-	.mt-logo__mark { width: 40px; height: 40px; }
+	.mt-logo__mark { height: 40px; }
 	.mt-logo__text { font-size: 20px; }
 	.mt-nav { position: fixed; top: 0; right: 0; bottom: 0; z-index: 2; width: min(88vw, 400px); flex-direction: column; align-items: stretch; gap: 22px; margin: 0; padding: 0 22px calc(28px + env(safe-area-inset-bottom)); background: var(--bg-2); box-shadow: -24px 0 60px rgba(0,0,0,.45); overflow-y: auto; overscroll-behavior: contain; transform: translateX(100%); visibility: hidden; transition: transform .3s cubic-bezier(.32,.72,0,1), visibility .3s; }
 	.mt-nav.is-open { transform: none; visibility: visible; }
