@@ -64,6 +64,46 @@
 		else toast('Наш номер в MAX: ' + num);
 	});
 
+	// «Как мы работаем»: шаг нажимается и открывает свою карточку (.mt-panel идёт в разметке сразу за шагом).
+	// Десктоп — всегда открыта одна карточка; телефон — аккордеон, повторное нажатие закрывает.
+	const stepsBox = document.querySelector('.mt-steps');
+	if (stepsBox) {
+		const steps = [...stepsBox.querySelectorAll(':scope > .mt-step')];
+		const panels = steps.map(s => s.nextElementSibling?.classList.contains('mt-panel') ? s.nextElementSibling : null);
+		const wide = matchMedia('(min-width: 961px)');
+		const show = i => {
+			const anchor = steps[i];
+			const before = anchor.getBoundingClientRect().top;
+			const close = !wide.matches && steps[i].classList.contains('is-active');
+			steps.forEach((s, k) => {
+				const on = k === i && !close;
+				s.classList.toggle('is-active', on);
+				s.setAttribute('aria-expanded', on);
+				panels[k]?.classList.toggle('is-open', on);
+			});
+			// на телефоне закрытая карточка выше сдвигает страницу — возвращаем нажатый шаг под палец
+			if (!wide.matches) scrollBy(0, anchor.getBoundingClientRect().top - before);
+		};
+		steps.forEach((s, i) => {
+			s.setAttribute('role', 'button');
+			s.tabIndex = 0;
+			s.setAttribute('aria-expanded', s.classList.contains('is-active'));
+			if (panels[i]?.id) s.setAttribute('aria-controls', panels[i].id);
+			s.addEventListener('click', () => show(i));
+			s.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); show(i); } });
+		});
+		stepsBox.addEventListener('click', e => {
+			const b = e.target.closest('.mt-panel__next');
+			if (!b) return;
+			const i = Number(b.dataset.step) - 1;
+			show(i);
+			if (!wide.matches) steps[i].scrollIntoView({ block: 'start', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+			steps[i].focus({ preventScroll: true });
+		});
+		// при переходе с телефона на десктоп всё закрыто быть не может
+		wide.addEventListener('change', e => { if (e.matches && !steps.some(s => s.classList.contains('is-active'))) show(0); });
+	}
+
 	const goal = name => { if (window.mtMetrika && typeof window.ym === 'function') window.ym(window.mtMetrika, 'reachGoal', name); };
 	document.addEventListener('click', e => {
 		const a = e.target.closest('a');
